@@ -2,7 +2,7 @@ import easyocr
 import cv2
 import math
 import numpy as np
-
+from os import listdir
 
 def get_line(x1, y1, x2, y2):
     points = []
@@ -38,7 +38,6 @@ def get_line(x1, y1, x2, y2):
         points.reverse()
     return points
 
-    
 def check_black(x1, y1, x2, y2, gray):
     pts = get_line(x1, y1, x2, y2)
     for pt in pts:
@@ -46,16 +45,19 @@ def check_black(x1, y1, x2, y2, gray):
             return True
     return False
 
-imgPath = 'sample1.jpg'
 reader = easyocr.Reader(['ch_tra','en'],gpu=True)
-result = reader.readtext(imgPath)
+result = reader.readtext('Sample_image/sample1.jpg')
 
-img = cv2.imread(imgPath)
+img = cv2.imread('Sample_image/sample1.jpg')
 res = img.copy()
 mask = np.zeros(img.shape[:2],dtype=np.uint8)
 
 for i in result:
-    cv2.rectangle(mask, (math.floor(i[0][0][0]),math.floor(i[0][0][1])), (math.floor(i[0][2][0]),math.floor(i[0][2][1])), (255), 2)
+    cv2.rectangle(img, (math.floor(i[0][0][0]),math.floor(i[0][0][1])), (math.floor(i[0][2][0]),math.floor(i[0][2][1])), (0,255,0), 2)
+
+# cv2.imwrite('Output_image/' + f, res)
+cv2.imshow("Img",img)
+cv2.waitKey(0)
 
 countours,hierarchy=cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
@@ -86,6 +88,7 @@ for c in rightContours:
     # cv2.drawContours(res,[c],0,(0,255,0),2)
     cv2.fillPoly(res, pts = rightContours, color=(255,255,255))
 
+# cv2.imwrite('Output_image/' + f, res)
 cv2.imshow("Final",res)
 cv2.waitKey(0)
 

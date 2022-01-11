@@ -22,7 +22,7 @@ import pytesseract
 from pytesseract import Output
 import math
 
-img = cv2.imread('sample1.jpg')
+img = cv2.imread('Sample_image/sample1.jpg')
 # img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 # (thresh, img) = cv2.threshold(img, 180, 255, cv2.THRESH_BINARY)
 
