@@ -2,7 +2,7 @@
 My initial target is to clean comics with vertical traditional chinese text. So I needed an OCR that can accurately recognize that. Unfortunately, most of the well-known OCR tools were not developed for that. I tested quite a few tools to find out that easy OCR should be the one most suitable for my use case. I kept all the testing script in the OCR_test directory
 
 Input image:
-![Input Image](https://github.com/matthewmakhl/Empty-Comic-Dialog-box/blob/main/README_images/Input_image.JPG)
+![Input Image](https://github.com/matthewmakhl/Empty-Comic-Dialog-box/blob/main/README_images/Input_image.jpg)
 
 
 ## OCR
@@ -30,7 +30,7 @@ Come across this tool in some chinese blog. It recognized vertical chinese text 
 I just coded the script to do some simple cleaning at this point. It first copied another images and turned the copied images into black and white scale. If the border of the green boxes detected in the previous step doesn't touch any black line at all, the script will turn everything in the boxes as white.
 
 Result image:
-![Output Image](https://github.com/matthewmakhl/Empty-Comic-Dialog-box/blob/main/README_images/Output_image.JPG)
+![Output Image](https://github.com/matthewmakhl/Empty-Comic-Dialog-box/blob/main/README_images/Output_image.jpg)
 
 The cleaning method can certainly be improved. But I cannot think of an easy method to do it right now. I will think of it if there is really demand for this tool. Currently it is only for my own experiment.
 
