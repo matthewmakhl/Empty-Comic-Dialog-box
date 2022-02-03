@@ -2,7 +2,9 @@ import easyocr
 import cv2
 import math
 import numpy as np
-from os import listdir, remove
+import os
+import sys
+import ctypes
 
 def get_line(x1, y1, x2, y2):
     points = []
@@ -50,14 +52,26 @@ def check_black(x1, y1, x2, y2, gray):
 # for f in fileList:
 #     remove('Input_image/' + f)
 
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    # If the application is run as a bundle, the PyInstaller bootloader
+    # extends the sys module by a flag frozen=True and sets the app 
+    # path into variable _MEIPASS'.
+    application_path = os.path.dirname(sys.executable)
+else:
+    application_path = os.path.dirname(os.path.abspath(__file__))
+
+# Check the current file path
+# ctypes.windll.user32.MessageBoxW(0, application_path, "Current path", 1)
+
 # Look for all files in the Input_Image directory
-fileList = listdir('Input_image')
+fileList = os.listdir(os.path.join(application_path, 'Input_image'))
 
 for f in fileList:
     reader = easyocr.Reader(['ch_tra','en'], gpu=True)
-    result = reader.readtext('Input_image/' + f)
+    result = reader.readtext(os.path.join(application_path, 'Input_image/' + f))
 
-    img = cv2.imread('Input_image/' + f)
+    img = cv2.imread(os.path.join(application_path, 'Input_image/' + f))
     res = img.copy()
     mask = np.zeros(img.shape[:2],dtype=np.uint8)
 
@@ -93,7 +107,7 @@ for f in fileList:
         # cv2.drawContours(res,[c],0,(0,255,0),2)
         cv2.fillPoly(res, pts = rightContours, color=(255,255,255))
 
-    cv2.imwrite('Output_image/' + f, res)
+    cv2.imwrite(os.path.join(application_path, 'Output_image/' + f), res)
     # cv2.imshow("Final",res)
     # cv2.waitKey(0)
 
